@@ -24,6 +24,7 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
     end
     follow_redirect!
     assert_template 'users/show'
-    assert_not_empty flash, "Should not be emtpy in any case"
+    assert_not_empty flash, "Should not be emtpy in any case" # 2 assertions?
+    assert is_logged_in?
   end
 end

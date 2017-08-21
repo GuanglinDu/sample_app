@@ -22,6 +22,7 @@
 
 # Ignore VIM swap files
 *.swp
+*.swo
 
 # Ignore Spring files
 /sprint/*.pid

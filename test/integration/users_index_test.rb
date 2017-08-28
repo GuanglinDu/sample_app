@@ -28,4 +28,20 @@ class UsersIndexTest < ActionDispatch::IntegrationTest
     get users_path
     assert_select 'a', text: 'delete', count: 0
   end
+
+  test "only activated users showed" do
+    @non_admin.activated = false
+    @non_admin.save # save to the db
+
+    # /users
+    log_in_as(@admin)
+    get users_path
+    assert_select 'a[href=?]', user_path(@admin), text: @admin.name
+    assert_select 'a[href=?]', user_path(@non_admin), count: 0
+
+    # /users/:id
+    #get users_path(@admin.id)
+    #puts response
+    #assert_select 'h1', text: @admin.name, count: 1
+  end
 end

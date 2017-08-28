@@ -1,5 +1,6 @@
 Rails.application.configure do
-  # Settings specified here will take precedence over those in config/application.rb.
+  # Settings specified here will take precedence over those in
+  # config/application.rb.
 
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
@@ -27,7 +28,10 @@ Rails.application.configure do
   end
 
   # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = true 
+  config.action_mailer.delivery_method = :test
+  host = 'localhost:3000' 
+  config.action_mailer.default_url_options = { host: host, protocol: 'https' } 
 
   config.action_mailer.perform_caching = false
 

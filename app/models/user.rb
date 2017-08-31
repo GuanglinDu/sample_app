@@ -2,7 +2,7 @@ class User < ApplicationRecord
   #VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
 
-  attr_accessor :remember_token, :activation_token
+  attr_accessor :remember_token, :activation_token, :reset_token
 
   #before_save { self.email = email.downcase }
   #before_save { email.downcase! } # the same effect
@@ -37,7 +37,7 @@ class User < ApplicationRecord
 
   # Returns true if the given token matches the digest.
   def authenticated?(attribute, token)
-    digest = send("#{attribute}_digest")
+    digest = send("#{attribute}_digest") # i.e., self.send()
     return false if digest.nil?
     BCrypt::Password.new(digest).is_password?(token)
   end
@@ -49,14 +49,35 @@ class User < ApplicationRecord
 
   # Activates an account.
   def activate
+    # The following 2 lines hit the db twice,
     #update_attribute(:activated, true)
     #update_attribute(:activated_at, Time.zone.now)
+    # while this hits the db only once. Performance matters.
     update_columns(activated: true, activated_at: Time.zone.now) 
   end
 
   # Sends the activation email.
   def send_activation_email
     UserMailer.account_activation(self).deliver_now
+  end
+
+  # Sets the password reset attributes.
+  def create_reset_digest
+    self.reset_token = User.new_token
+    #update_attribute(:reset_digest,  User.digest(reset_token))
+    #update_attribute(:reset_sent_at, Time.zone.now)
+    update_columns(reset_digest:  User.digest(reset_token),
+                   reset_sent_at: Time.zone.now)
+  end
+
+  # Sends password reset email.
+  def send_password_reset_email
+    UserMailer.password_reset(self).deliver_now
+  end
+
+  # Returns true if a password reset has expired.
+  def password_reset_expired?
+    reset_sent_at < 2.hours.ago
   end
 
   private

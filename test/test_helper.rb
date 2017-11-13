@@ -24,7 +24,7 @@ class ActiveSupport::TestCase
   end
 end
 
-# Monkey-patches class ActionDispatch::IntegrationTest
+# Monkey-patches class ActionDispatch::IntegrationTest.
 class ActionDispatch::IntegrationTest
   # Log in as a particular user.
   def log_in_as(user, password: 'password', remember_me: '1')

@@ -2,9 +2,9 @@ class User < ApplicationRecord
   #VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
 
-  has_many :microposts, dependent: :destroy
-
   attr_accessor :remember_token, :activation_token, :reset_token
+
+  has_many :microposts, dependent: :destroy
 
   #before_save { self.email = email.downcase }
   #before_save { email.downcase! } # the same effect
@@ -16,8 +16,9 @@ class User < ApplicationRecord
                     format: { with: VALID_EMAIL_REGEX },
                     uniqueness: { case_sensitive: false }
 
-  has_secure_password
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
+  
+  has_secure_password
 
   # Returns the hash digest of the given string.
   def User.digest(string)

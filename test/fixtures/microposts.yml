@@ -23,7 +23,7 @@ micropost_<%= n %>:
   content: <%= Faker::Lorem.sentence(5) %>
   created_at: <%= 42.days.ago %>
   user: michael
- <% end %> 
+<% end %> 
 
 ants:
   content: "Oh, is that what you want? Because that's how you get ants!"

@@ -1,5 +1,8 @@
 <% if @feed_items.any? %>
   <ol class="microposts">
+    <% if false %>
+      @feed_items are actually microposts, so partial micropost is rendered.
+    <% end %>
     <%= render @feed_items %>
   </ol>
   <%= will_paginate @feed_items %>

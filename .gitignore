@@ -26,3 +26,6 @@
 
 # Ignore Spring files
 /sprint/*.pid
+
+# Folder on mac OS
+.DS_Store

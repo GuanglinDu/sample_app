@@ -18,8 +18,8 @@ gem 'nokogiri',                '1.9.1'
 gem 'bootstrap-will_paginate', '1.0.0'
 
 group :development, :test do
-  gem 'sqlite3', '1.3.12'
-  gem 'byebug',  '9.0.0', platform: :mri
+  gem 'sqlite3',       '1.3.12'
+  gem 'byebug',        '9.0.0', platform: :mri
   gem 'awesome_print', '1.6.1'
 end
 

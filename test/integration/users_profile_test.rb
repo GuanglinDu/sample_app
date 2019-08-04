@@ -22,4 +22,8 @@ class UsersProfileTest < ActionDispatch::IntegrationTest
     # Tests that will_paginate appears only once.
     assert_select 'div.pagination', count: 1
   end
+
+  test "home display" do
+  
+  end
 end

@@ -23,7 +23,19 @@ class UsersProfileTest < ActionDispatch::IntegrationTest
     assert_select 'div.pagination', count: 1
   end
 
-  test "home display" do
-  
+  test "stats on profile and home pages" do
+    get login_path
+    post login_path, params: { session: { email:    @user.email,
+                                          password: 'password' } }
+    assert_redirected_to @user # user profile page
+    follow_redirect!
+    assert_template 'users/show'
+    assert_select "a>strong#following", text: "2"
+    assert_select "a>strong#followers", text: "2"
+
+    get root_path # user home page
+    assert_template 'static_pages/home'
+    assert_select "a>strong#following", text: "2"
+    assert_select "a>strong#followers", text: "2"
   end
 end

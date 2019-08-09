@@ -65,6 +65,8 @@ class FollowingTest < ActionDispatch::IntegrationTest
     get root_path
     @user.feed.paginate(page: 1).each do |micropost|
       assert_match CGI.escapeHTML(micropost.content), response.body
+      # The following cannot work
+      #assert_match CGI.escapeHTML(response.body), micropost.content 
     end
   end
 end
